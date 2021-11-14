@@ -9,23 +9,48 @@ namespace Lessons.Architecture
     {
         public Text coinsDebug;
 
-        private BankRepository bankRepository;
-        private BankInteractor bankInteractor;
+
+        //не хорошо:
+        public static InteractorsBase interactorsBase;
+        public static RepositoriesBase repositoriesBase;
 
         private void Start()
         {
-            this.bankRepository = new BankRepository();
-            this.bankRepository.Initialize();
+            //coinsDebug.text = this.bankInteractor.coins.ToString();
+            //Debug.Log(this.bankInteractor.coins);
 
-            this.bankInteractor = new BankInteractor(bankRepository); //плохо
-            this.bankRepository.Initialize();
+            StartCoroutine(StartGameRoutine());
+        }
 
-            coinsDebug.text = this.bankInteractor.coins.ToString();
-            Debug.Log(this.bankInteractor.coins);
+
+        IEnumerator StartGameRoutine()
+        {
+            interactorsBase = new InteractorsBase();
+            repositoriesBase = new RepositoriesBase();
+
+            interactorsBase.CreateAllInteractors();
+            repositoriesBase.CreateAllRepositories();
+            yield return null;//пропуск кадра
+
+            interactorsBase.SendOnCreateToAllInteractors();
+            repositoriesBase.SendOnCreateToAllRepositories();
+            yield return null;
+
+            interactorsBase.SendInitializeToAllInteractors();
+            repositoriesBase.SendInitializeToAllRepositories();
+            yield return null;
+
+            interactorsBase.SendOnStartToAllInteractors();
+            repositoriesBase.SendOnStartToAllRepositories();
+            yield return null;
+
+
         }
 
         private void Update()
         {
+            if (!BankI)
+
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 this.bankInteractor.AddCoins(this, 5);

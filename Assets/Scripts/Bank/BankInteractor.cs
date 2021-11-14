@@ -11,9 +11,15 @@ namespace Lessons.Architecture
         //public int coins { get { return bankRepository.coins; } set { value = bankRepository.coins; } }
         public int coins => bankRepository.coins; // можем только возвращать, не класть
 
-        public BankInteractor(BankRepository bankRepository) //временно
+        //public BankInteractor(BankRepository bankRepository) //временно
+        public BankInteractor()
         {
-            this.bankRepository = bankRepository;
+            //this.bankRepository = bankRepository;            
+        }
+
+        public override void OnCreate()
+        {
+            this.bankRepository = ArchTester.repositoriesBase.GetRepository<BankRepository>();
         }
 
         public bool isEnoughCoins(int value)
