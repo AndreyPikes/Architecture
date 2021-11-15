@@ -24,7 +24,7 @@ namespace Lessons.Architecture
 
         public override void OnCreate()
         {
-            this.bankRepository = ArchTester.sceneManager.GetRepository<BankRepository>();
+            this.bankRepository = Game.GetRepository<BankRepository>();
         }
 
         public bool isEnoughCoins(int value)

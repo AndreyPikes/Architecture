@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,21 +9,29 @@ namespace Lessons.Architecture
     public class ArchTester : MonoBehaviour
     {
         public Text coinsDebug;
-        public static SceneManagerBase sceneManager;
+        private Player player;
 
         private void Start()
         {
-            sceneManager = new SceneManagerExample();
-            sceneManager.InitSceneMap();
-            sceneManager.LoadCurrentSceneAsync();
+            Game.Run();
+            Game.OnGameInitializedEvent += OnGameInitialized;
         }
 
-
-        
+        private void OnGameInitialized()
+        {
+            Game.OnGameInitializedEvent -= OnGameInitialized;
+            //как вытащить игрока? о котором мы ничего не знаем
+            var playerInteractor = Game.GetInteractor<PlayerInteractor>();
+            this.player = playerInteractor.player;
+        }
 
         private void Update()
         {
             if (!Bank.isInitialized) return;
+
+            if (player == null) return;
+
+            Debug.Log($"Player position = {player.transform.position}");
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {

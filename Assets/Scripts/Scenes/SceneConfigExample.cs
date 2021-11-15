@@ -24,6 +24,7 @@ namespace Lessons.Architecture
             var interactorsMap = new Dictionary<Type, Interactor>();
 
             this.CreateInteractor<BankInteractor>(interactorsMap);
+            this.CreateInteractor<PlayerInteractor>(interactorsMap);
 
             return interactorsMap;
         }
