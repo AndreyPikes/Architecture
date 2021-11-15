@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Lessons.Architecture
 {
-    public static class Bank //бан по сути тот же интерактор и может то же самое
+    public static class Bank //банк по сути тот же интерактор и может то же самое
     {
         public static event Action OnBankInitializedEvent;
         public static int coins

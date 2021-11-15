@@ -8,25 +8,19 @@ namespace Lessons.Architecture
     public class InteractorsBase
     {
         private Dictionary<Type, Interactor> interactorsMap;
+        private SceneConfig sceneConfig;
 
-        public InteractorsBase()
+        public InteractorsBase(SceneConfig sceneConfig)
         {
-            this.interactorsMap = new Dictionary<Type, Interactor>();
+            this.sceneConfig = sceneConfig;
         }
 
         public void CreateAllInteractors()
         {
-            CreateInteractor<BankInteractor>();
+            this.interactorsMap = this.sceneConfig.CreateAllInteractors();
         }
 
-        private void CreateInteractor<T>() where T : Interactor, new()
-        {
-            var interactor = new T();
-            var type = typeof(T);
-            //this.interactorsMap.Add(type, interactor); а так можно?
-            this.interactorsMap[type] = interactor;
-        }
-
+        
         public void SendOnCreateToAllInteractors()
         {
             var allInteractors = this.interactorsMap.Values;

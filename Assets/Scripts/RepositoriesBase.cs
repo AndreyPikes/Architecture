@@ -8,24 +8,19 @@ namespace Lessons.Architecture
     public class RepositoriesBase
     {
         private Dictionary<Type, Repository> repositoriesMap;
+        private SceneConfig sceneConfig;
 
-        public RepositoriesBase()
+        public RepositoriesBase(SceneConfig sceneConfig)
         {
-            this.repositoriesMap = new Dictionary<Type, Repository>();
+            this.sceneConfig = sceneConfig;
         }
 
         public void CreateAllRepositories()
         {
-            CreateRepository<BankRepository>();
+            this.repositoriesMap = this.sceneConfig.CreateAllRepositories();
         }
 
-        private void CreateRepository<T>() where T : Repository, new()
-        {
-            var repository = new T();
-            var type = typeof(T);
-            //this.interactorsMap.Add(type, interactor); а так можно?
-            this.repositoriesMap[type] = repository;
-        }
+        
 
         public void SendOnCreateToAllRepositories()
         {

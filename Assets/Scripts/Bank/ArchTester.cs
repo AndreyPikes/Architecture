@@ -8,43 +8,17 @@ namespace Lessons.Architecture
     public class ArchTester : MonoBehaviour
     {
         public Text coinsDebug;
-
-
-        //не хорошо:
-        public static InteractorsBase interactorsBase;
-        public static RepositoriesBase repositoriesBase;
+        public static SceneManagerBase sceneManager;
 
         private void Start()
         {
-
-            this.StartCoroutine(this.StartGameRoutine());
+            sceneManager = new SceneManagerExample();
+            sceneManager.InitSceneMap();
+            sceneManager.LoadCurrentSceneAsync();
         }
 
 
-        private IEnumerator StartGameRoutine()
-        {
-            interactorsBase = new InteractorsBase();
-            repositoriesBase = new RepositoriesBase();
-
-            interactorsBase.CreateAllInteractors();
-            repositoriesBase.CreateAllRepositories();
-            yield return null;//пропуск кадра
-
-            interactorsBase.SendOnCreateToAllInteractors();
-            repositoriesBase.SendOnCreateToAllRepositories();
-            yield return null;
-
-            interactorsBase.SendInitializeToAllInteractors();
-            repositoriesBase.SendInitializeToAllRepositories();
-            yield return null;
-
-            interactorsBase.SendOnStartToAllInteractors();
-            repositoriesBase.SendOnStartToAllRepositories();
-            yield return null;
-
-            coinsDebug.text = Bank.coins.ToString();
-            
-        }
+        
 
         private void Update()
         {
