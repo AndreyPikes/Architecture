@@ -17,6 +17,11 @@ namespace Lessons.Architecture
             //this.bankRepository = bankRepository;            
         }
 
+        public override void Initialize()
+        {
+            Bank.Initialize(this);
+        }
+
         public override void OnCreate()
         {
             this.bankRepository = ArchTester.repositoriesBase.GetRepository<BankRepository>();

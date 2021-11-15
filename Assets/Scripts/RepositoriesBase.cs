@@ -41,7 +41,7 @@ namespace Lessons.Architecture
             var allRepositories = this.repositoriesMap.Values;
             foreach (var repository in allRepositories)
             {
-                repository.OnCreate();
+                repository.Initialize();
             }
         }
 
@@ -50,7 +50,7 @@ namespace Lessons.Architecture
             var allRepositories = this.repositoriesMap.Values;
             foreach (var repository in allRepositories)
             {
-                repository.OnCreate();
+                repository.OnStart();
             }
         }
 

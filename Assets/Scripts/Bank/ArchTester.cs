@@ -16,14 +16,12 @@ namespace Lessons.Architecture
 
         private void Start()
         {
-            //coinsDebug.text = this.bankInteractor.coins.ToString();
-            //Debug.Log(this.bankInteractor.coins);
 
-            StartCoroutine(StartGameRoutine());
+            this.StartCoroutine(this.StartGameRoutine());
         }
 
 
-        IEnumerator StartGameRoutine()
+        private IEnumerator StartGameRoutine()
         {
             interactorsBase = new InteractorsBase();
             repositoriesBase = new RepositoriesBase();
@@ -44,24 +42,27 @@ namespace Lessons.Architecture
             repositoriesBase.SendOnStartToAllRepositories();
             yield return null;
 
-
+            coinsDebug.text = Bank.coins.ToString();
+            
         }
 
         private void Update()
         {
-            if (!BankI)
+            if (!Bank.isInitialized) return;
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                this.bankInteractor.AddCoins(this, 5);
-                coinsDebug.text = this.bankInteractor.coins.ToString();
-                Debug.Log(this.bankInteractor.coins);
+               Debug.Log("Up");
+               Bank.AddCoins(this, 5);
+               coinsDebug.text = Bank.coins.ToString();
+                
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                this.bankInteractor.SpendCoins(this, 10);
-                coinsDebug.text = this.bankInteractor.coins.ToString();
-                Debug.Log(this.bankInteractor.coins);
+                Debug.Log("Down");
+                Bank.SpendCoins(this, 10);
+                coinsDebug.text = Bank.coins.ToString();
+                
 
             } 
                 
